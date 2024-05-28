@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:project/Provider/UsuarioProvider.dart';
 import 'package:project/View/Screems/MyHomePage.dart';
 import 'package:project/View/components/MyButton.dart';
 import 'package:project/View/components/MyTextField.dart';
 import 'package:project/View/components/SquareTile.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -14,11 +16,15 @@ class LoginPage extends StatelessWidget {
   final passwordController = TextEditingController();
 
   // sign user in method
-  void signUserIn(BuildContext context) {
-    //prefs.usuario = usernameController.text;
-    //prefs.contrasena = passwordController.text;
-    //print (prefs.usuario);
-    Navigator.of(context).pushNamed(MyHomePage.nombre);
+   void signUserIn(BuildContext context) async {
+    final usuarioProvider = Provider.of<UsuarioProvider>(context, listen: false);
+    try {
+      await usuarioProvider.login(usernameController.text, passwordController.text);
+      Navigator.of(context).pushNamed(MyHomePage.nombre);
+    } catch (e) {
+      // Handle login error
+      print("Error al iniciar sesión: $e");
+    }
   }
 
   @override
