@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/View/Screems/MyHomePage.dart';
 import 'package:project/View/components/MyButton.dart';
 import 'package:project/View/components/MyTextField.dart';
 import 'package:project/View/components/SquareTile.dart';
@@ -17,7 +18,7 @@ class LoginPage extends StatelessWidget {
     //prefs.usuario = usernameController.text;
     //prefs.contrasena = passwordController.text;
     //print (prefs.usuario);
-    //Navigator.of(context).pushNamed(MapScreen.nombre);
+    Navigator.of(context).pushNamed(MyHomePage.nombre);
   }
 
   @override

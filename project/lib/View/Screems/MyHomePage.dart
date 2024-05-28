@@ -1,74 +1,164 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:project/View/Screems/Alimentacion.dart';
+import 'package:project/View/Screems/Higiene.dart';
+import 'package:project/View/Screems/Panales.dart';
+import 'package:project/View/Screems/Ropa.dart';
+import 'package:project/View/Screems/Seguridad.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  
-  final String title;
-
+  const MyHomePage({super.key});
+  static const String nombre = 'MyHomePage';
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-     
-      _counter++;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
- 
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            "Lista de articulos",
+            style: TextStyle(color: Colors.white),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.blue,
+        ),
+        body: Column(children: [
+          Card(
+            child: Image.network(
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjoNk9PiETzm8B2ULHMrDLZE6__7bnqjniX7nWZm8QoQ&s",
+                height: 100),
+          ),
+          Row(
+            children: [
+              Card(
+                child: Image.network(
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_mAYw7EjK6rEpxM5JooCxV32mqzEl1juxAfmHiyg35Q&s",
+                    height: 100),
+              ),
+            ],
+          ),
+          Card(
+            child: Image.network(
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYOykzwx5BgMc2F4aMSTaHm1savF_0hXh35s6qX2uqzw&s",
+                height: 100),
+          ),
+          Row(
+            children: [
+              Card(
+                child: Image.network(
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTro4H-4xuWAwqgb-yUBePOYXreXosxguCReZboYSbvEg&s",
+                    height: 100),
+              ),
+            ],
+          ),
+          Card(
+            child: Image.network(
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjoNk9PiETzm8B2ULHMrDLZE6__7bnqjniX7nWZm8QoQ&s",
+                height: 100),
+          ),
+        ]),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      Icons.account_circle_sharp,
+                      size: 100.5,
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      'Categorias',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              ListTile(
+                title: const Text('Ropa'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Ropa(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Pañales'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Panales(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Alimentación'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>  Alimentacion(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Higiene'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Higiene(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                title: const Text('Seguridad'),
+                onTap: () {
+                   Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Seguridad(),
+                    ),
+                  );
+                 
+                },
+              ),
+              ListTile(
+                title: const Text('Personalizar'),
+                onTap: () {
+                    
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Alimentacion(),
+                    ),
+                  );
+                
+                },
+              ),
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:project/View/Screems/Alimentacion.dart';
 import 'package:project/View/Screems/MyHomePage.dart';
 import 'package:project/View/Login/LoginPage.dart';
+import 'package:project/View/Screems/Panales.dart';
+import 'package:project/View/Screems/Ropa.dart';
+import 'package:project/View/Screems/Seguridad.dart';
+
+import '../Screems/Higiene.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -17,10 +22,15 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: LoginPage.nombre,
       routes: {
-        LoginPage.nombre:(context) => LoginPage(),
-       // MapScreen.nombre:(context) =>   MapScreen(), 
+        LoginPage.nombre: (context) => LoginPage(),
+        MyHomePage.nombre: (context) => MyHomePage(),
+        Ropa.nombre: (context) => Ropa(),
+        Panales.nombre: (context) => Panales(),
+        Alimentacion.nombre: (context) => Alimentacion(),
+        Higiene.nombre: (context) => Higiene(),
+        Seguridad.nombre: (context) => Seguridad(),
       },
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: const MyHomePage(),
     );
   }
 }
