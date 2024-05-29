@@ -28,7 +28,7 @@ class _RopaState extends State<Ropa> {
 
     final productosProvider =
         Provider.of<ProductosProvider>(context, listen: false);
-    ProductoLis = productosProvider.getProductosByCategory('1', token);
+    ProductoLis = productosProvider.getProductosByCategory('7', token);
   }
 
   @override
