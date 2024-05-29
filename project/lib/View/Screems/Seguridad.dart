@@ -206,8 +206,11 @@ class _SeguridadState extends State<Seguridad> {
                               fontSize: 14,
                             ),
                           ),
+                          subtitle: Text("Prioridad: ${producto.prioridad ?? 'Sin prioridad'}", style: TextStyle(color: Colors.blue),),
+
                           leading: Icon(Icons.child_care, color: Colors.blue),
                         ),
+                      
                       ],
                     ),
                   ),

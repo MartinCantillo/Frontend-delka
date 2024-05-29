@@ -207,6 +207,7 @@ class _RopaState extends State<Ropa> {
                               fontSize: 14,
                             ),
                           ),
+                           subtitle: Text("Prioridad: ${producto.prioridad ?? 'Sin prioridad'}", style: TextStyle(color: Colors.blue),),
                           leading: Icon(Icons.child_care, color: Colors.blue),
                         ),
                       ],
