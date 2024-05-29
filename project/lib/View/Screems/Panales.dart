@@ -2,34 +2,156 @@ import 'package:flutter/material.dart';
 import 'package:project/LocalStore/sharepreference.dart';
 import 'package:project/Models/Producto.dart';
 import 'package:project/Provider/ProductosProvider.dart';
+import 'package:project/View/Screems/Alimentacion.dart';
+import 'package:project/View/Screems/Higiene.dart';
+import 'package:project/View/Screems/Ropa.dart';
+import 'package:project/View/Screems/Seguridad.dart';
 
 import 'package:provider/provider.dart';
 
-class Panales extends StatelessWidget {
+class Panales extends StatefulWidget {
   const Panales({super.key});
   static const String nombre = 'Panales';
 
   @override
-  Widget build(BuildContext context) {
-    String token = "";
+  State<Panales> createState() => _PanalesState();
+}
+
+class _PanalesState extends State<Panales> {
+  late Future<List<Producto>> ProductoLis;
+
+  @override
+  void initState() {
+    super.initState();
+
     final prefs = PrefernciaUsuario();
+    final token = prefs.token;
 
-    token = prefs.token;
-    final productosProvider = Provider.of<ProductosProvider>(context);
+    final productosProvider =
+        Provider.of<ProductosProvider>(context, listen: false);
+    ProductoLis = productosProvider.getProductosByCategory('1', token);
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Categoría de Pañales"),
+        title: Text(
+          "Categoría de Pañales",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.account_circle_sharp,
+                    size: 100.5,
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    'Categorias',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              title: const Text('Ropa'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Ropa(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Pañales'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Panales(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Alimentación'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Alimentacion(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Higiene'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Higiene(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Seguridad'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Seguridad(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('Personalizar'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Alimentacion(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: FutureBuilder(
-        future: productosProvider.getProductosByCategory('1', token),
-        builder: (context, snapshot) {
+        future: ProductoLis,
+        builder: (context, AsyncSnapshot<List<Producto>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else {
-            final List<Producto> productos = productosProvider.productos;
+            final List<Producto> productos = snapshot.data ?? [];
 
             return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -41,17 +163,55 @@ class Panales extends StatelessWidget {
               itemBuilder: (context, index) {
                 final Producto producto = productos[index];
                 return Card(
-                  child: Column(
-                    children: [
-                      // Puedes personalizar esto según las propiedades de tu modelo de producto
-                      ListTile(
-                        title: Text(producto.nombre ?? ""),
-
-                        subtitle: Text('\$${producto.precio}'),
-                        // Implementa aquí la lógica para mostrar la imagen del producto
-                        // Puedes usar AssetImage, NetworkImage, etc.
-                      ),
-                    ],
+                  elevation: 216,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(1225),
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(70),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.90), // Sombra
+                          spreadRadius: 2,
+                          blurRadius: 3,
+                          offset: Offset(0, 20),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListTile(
+                          title: Text(
+                            producto.nombre ?? "",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          subtitle: Text(
+                            '\$${producto.precio}',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 14,
+                            ),
+                          ),
+                          leading:
+                              Icon(Icons.child_friendly, color: Colors.blue),
+                        ),
+                        ListTile(
+                          title: Text(
+                            producto.nota ?? "",
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                          leading: Icon(Icons.child_care, color: Colors.blue),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },

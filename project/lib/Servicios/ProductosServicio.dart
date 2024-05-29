@@ -20,8 +20,9 @@ class ProductosService {
       );
       if (response.statusCode== 200) {
         final List<dynamic> jsonData = jsonDecode(response.body);
+        print(jsonData);
         final List<Producto> productos =
-            jsonData.map((data) => Producto.fromJson(data)).toList();
+            jsonData.map((data) => Producto.fromMap(data)).toList();
         return productos;
       } else {
         throw Exception("Error al obtener productos: ${response.statusCode}");
