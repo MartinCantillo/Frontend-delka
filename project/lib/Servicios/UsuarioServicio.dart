@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+
 import 'package:project/LocalStore/sharepreference.dart';
 import 'package:project/Models/Usuario.dart';
-
+import 'package:http/http.dart' as http;
 class UsuarioServicio {
   final String endpoint = "https://codedelka.pythonanywhere.com/api/";
 
-  Future<Usuario>? GetUsuario(Usuario user) async {
+  Future<Usuario>? getUsuario(Usuario user) async {
     final prefs = PrefernciaUsuario();
     try {
       final url = "$endpoint/login";

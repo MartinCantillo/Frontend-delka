@@ -6,7 +6,7 @@ class Producto {
   String? prioridad;
   String? nota;
   double? precio;
-  double? adquirido;
+  String? adquirido;
   int? idCategoria;
   Producto({
     this.id,
@@ -37,7 +37,7 @@ class Producto {
       prioridad: map['prioridad'],
       nota: map['nota'],
       precio: map['precio']?.toDouble(),
-      adquirido: map['adquirido']?.toDouble(),
+      adquirido: map['adquirido']??"",
       idCategoria: map['idCategoria']?.toInt(),
     );
   }

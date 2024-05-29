@@ -9,27 +9,32 @@ import 'package:provider/provider.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   static const String nombre = 'login';
- // final prefs = PrefernciaUsuario();
+  // final prefs = PrefernciaUsuario();
 
   // text editing controllers
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
   // sign user in method
-   void signUserIn(BuildContext context) async {
-    final usuarioProvider = Provider.of<UsuarioProvider>(context, listen: false);
+  void signUserIn(BuildContext context) async {
+    final usuarioProvider =
+        Provider.of<UsuarioProvider>(context, listen: false);
     try {
-      await usuarioProvider.login(usernameController.text, passwordController.text);
+      await usuarioProvider.login(
+          usernameController.text, passwordController.text);
       Navigator.of(context).pushNamed(MyHomePage.nombre);
     } catch (e) {
-      // Handle login error
-      print("Error al iniciar sesión: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Usuario o contraseña incorrecto'),
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-   // prefs.ultimapagina = LoginPage.nombre;
+    
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(

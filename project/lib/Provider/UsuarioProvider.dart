@@ -10,7 +10,7 @@ class UsuarioProvider extends ChangeNotifier {
 
   Future<void> login(String username, String password) async {
    
-    final usuario = await usuarioS.GetUsuario(
+    final usuario = await usuarioS.getUsuario(
         Usuario(username: username, password: password));
     if (usuario != null) {
       _usuario = usuario;
