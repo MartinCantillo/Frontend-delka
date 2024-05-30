@@ -7,7 +7,6 @@ class ProductosService {
   final String endpoint = "https://codedelka.pythonanywhere.com/api/";
 
   Future<List<Producto>>? getProductoByCategory(String id, String token) async {
-    print('token$token');
     try {
       final url = "$endpoint/getProductosPorCategoria";
       final response = await http.post(
@@ -18,9 +17,9 @@ class ProductosService {
         },
         body: jsonEncode({'idCategoria': id}),
       );
-      if (response.statusCode== 200) {
+      if (response.statusCode == 200) {
         final List<dynamic> jsonData = jsonDecode(response.body);
-        print(jsonData);
+
         final List<Producto> productos =
             jsonData.map((data) => Producto.fromMap(data)).toList();
         return productos;
@@ -29,6 +28,31 @@ class ProductosService {
       }
     } catch (e) {
       throw Exception("Error al obtener productos: $e");
+    }
+  }
+
+  Future<String> saveProducto(Producto p, String token) async {
+    try {
+      final url = "$endpoint/addProducto";
+print("objeto${p.toJson()}");
+      print("Token de autenticación: $token");
+
+      final response = await http.post(
+        Uri.parse(url),
+        body: p.toJson(),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+     print("Código de estado de la respuesta: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        return "Producto Guardado";
+      } else {
+        throw Exception("Error ${response.statusCode}: ${response.body}");
+      }
+    } catch (e) {
+      throw Exception("Error $e");
     }
   }
 }

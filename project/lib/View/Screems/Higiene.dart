@@ -172,7 +172,7 @@ class _HigieneState extends State<Higiene> {
                       borderRadius: BorderRadius.circular(70),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.90), // Sombra
+                         color: Colors.blue.withOpacity(0.70), // S
                           spreadRadius: 2,
                           blurRadius: 3,
                           offset: Offset(0, 20),

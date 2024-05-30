@@ -4,19 +4,20 @@ import 'package:project/Models/Producto.dart';
 import 'package:project/Provider/ProductosProvider.dart';
 import 'package:project/View/Screems/Alimentacion.dart';
 import 'package:project/View/Screems/Higiene.dart';
+import 'package:project/View/Screems/MyHomePage.dart';
 import 'package:project/View/Screems/Panales.dart';
 import 'package:project/View/Screems/Ropa.dart';
 import 'package:provider/provider.dart';
 
 class Seguridad extends StatefulWidget {
   const Seguridad({super.key});
-static const String nombre = 'Seguridad';
+  static const String nombre = 'Seguridad';
   @override
   State<Seguridad> createState() => _SeguridadState();
 }
 
 class _SeguridadState extends State<Seguridad> {
- late Future<List<Producto>> ProductoLis;
+  late Future<List<Producto>> ProductoLis;
 
   @override
   void initState() {
@@ -44,6 +45,14 @@ class _SeguridadState extends State<Seguridad> {
         ),
         centerTitle: true,
         backgroundColor: Colors.blue,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              _showAddProductDialog(context);
+            },
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -171,7 +180,7 @@ class _SeguridadState extends State<Seguridad> {
                       borderRadius: BorderRadius.circular(70),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.90), // Sombra
+                          color: Colors.blue.withOpacity(0.70), // Sombra
                           spreadRadius: 2,
                           blurRadius: 3,
                           offset: Offset(0, 20),
@@ -206,11 +215,12 @@ class _SeguridadState extends State<Seguridad> {
                               fontSize: 14,
                             ),
                           ),
-                          subtitle: Text("Prioridad: ${producto.prioridad ?? 'Sin prioridad'}", style: TextStyle(color: Colors.blue),),
-
+                          subtitle: Text(
+                            "Prioridad: ${producto.prioridad ?? 'Sin prioridad'}",
+                            style: TextStyle(color: Colors.blue),
+                          ),
                           leading: Icon(Icons.child_care, color: Colors.blue),
                         ),
-                      
                       ],
                     ),
                   ),
@@ -222,5 +232,116 @@ class _SeguridadState extends State<Seguridad> {
       ),
     );
   }
-}
 
+  void _showAddProductDialog(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    final nombreController = TextEditingController();
+    final prioridadController = TextEditingController();
+    final notaController = TextEditingController();
+    final precioController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Agregar Producto'),
+          content: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    controller: nombreController,
+                    decoration: InputDecoration(labelText: 'Nombre'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingrese el nombre';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: prioridadController,
+                    decoration: InputDecoration(labelText: 'Prioridad'),
+                  ),
+                  TextFormField(
+                    controller: notaController,
+                    decoration: InputDecoration(labelText: 'Nota'),
+                  ),
+                  TextFormField(
+                    controller: precioController,
+                    decoration: InputDecoration(labelText: 'Precio'),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingrese el precio';
+                      }
+                      if (double.tryParse(value) == null) {
+                        return 'Por favor ingrese un número válido';
+                      }
+                      return null;
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: Text('Guardar'),
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  final producto = Producto(
+                    nombre: nombreController.text,
+                    prioridad: prioridadController.text,
+                    nota: notaController.text,
+                    idCategoria: 5,
+                    adquirido: "false",
+                    precio: double.parse(precioController.text),
+                  );
+                  final prefs = PrefernciaUsuario();
+                  final token = prefs.token;
+
+                  try {
+                    await Provider.of<ProductosProvider>(context, listen: false)
+                        .saveProducto(producto, token);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MyHomePage(),
+                      ),
+                    );
+                  } catch (e) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Error'),
+                          content: Text('Error al guardar producto: $e'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text('Cerrar'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

@@ -7,7 +7,7 @@ class ProductosProvider extends ChangeNotifier {
   List<Producto> _productos = [];
   List<Producto> get productos => _productos;
 
-   Future<List<Producto>> getProductosByCategory(
+  Future<List<Producto>> getProductosByCategory(
       String idCategoria, String token) async {
     try {
       final List<Producto>? productos =
@@ -16,8 +16,20 @@ class ProductosProvider extends ChangeNotifier {
       notifyListeners();
       return _productos;
     } catch (e) {
-      print("Error al obtener productos: $e");
-      throw e; 
+     // print("Error al obtener productos: $e");
+      throw e;
+    }
+  }
+
+  Future<String> saveProducto(Producto producto, String token) async {
+    try {
+      final response = await _productosService.saveProducto(producto, token);
+      _productos.add(producto);
+      notifyListeners();
+      return response;
+    } catch (e) {
+      //print("Error al guardar producto: $e");
+      throw e;
     }
   }
 }
