@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:project/LocalStore/sharepreference.dart';
 import 'package:project/Models/Producto.dart';
@@ -11,13 +10,13 @@ import 'package:provider/provider.dart';
 
 class Ropa extends StatefulWidget {
   const Ropa({super.key});
-static const String nombre = 'ropa';
+  static const String nombre = 'ropa';
   @override
   State<Ropa> createState() => _RopaState();
 }
 
 class _RopaState extends State<Ropa> {
- late Future<List<Producto>> ProductoLis;
+  late Future<List<Producto>> ProductoLis;
 
   @override
   void initState() {
@@ -45,7 +44,7 @@ class _RopaState extends State<Ropa> {
         ),
         centerTitle: true,
         backgroundColor: Colors.blue,
-          actions: [
+        actions: [
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
@@ -136,7 +135,7 @@ class _RopaState extends State<Ropa> {
                 );
               },
             ),
-            ListTile(
+             /*     ListTile(
               title: const Text('Personalizar'),
               onTap: () {
                 Navigator.push(
@@ -147,6 +146,7 @@ class _RopaState extends State<Ropa> {
                 );
               },
             ),
+         */
           ],
         ),
       ),
@@ -180,7 +180,7 @@ class _RopaState extends State<Ropa> {
                       borderRadius: BorderRadius.circular(70),
                       boxShadow: [
                         BoxShadow(
-                         color: Colors.blue.withOpacity(0.70), // S
+                          color: Colors.blue.withOpacity(0.70), // S
                           spreadRadius: 2,
                           blurRadius: 3,
                           offset: Offset(0, 20),
@@ -215,7 +215,10 @@ class _RopaState extends State<Ropa> {
                               fontSize: 14,
                             ),
                           ),
-                           subtitle: Text("Prioridad: ${producto.prioridad ?? 'Sin prioridad'}", style: TextStyle(color: Colors.blue),),
+                          subtitle: Text(
+                            "Prioridad: ${producto.prioridad ?? 'Sin prioridad'}",
+                            style: TextStyle(color: Colors.blue),
+                          ),
                           leading: Icon(Icons.child_care, color: Colors.blue),
                         ),
                       ],
@@ -229,7 +232,8 @@ class _RopaState extends State<Ropa> {
       ),
     );
   }
-   void _showAddProductDialog(BuildContext context) {
+
+  void _showAddProductDialog(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     final nombreController = TextEditingController();
     final prioridadController = TextEditingController();

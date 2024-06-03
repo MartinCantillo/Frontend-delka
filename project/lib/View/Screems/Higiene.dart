@@ -45,6 +45,14 @@ class _HigieneState extends State<Higiene> {
         ),
         centerTitle: true,
         backgroundColor: Colors.blue,
+          actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              _showAddProductDialog(context);
+            },
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -128,7 +136,7 @@ class _HigieneState extends State<Higiene> {
                 );
               },
             ),
-            ListTile(
+       /*     ListTile(
               title: const Text('Personalizar'),
               onTap: () {
                 Navigator.push(
@@ -139,7 +147,7 @@ class _HigieneState extends State<Higiene> {
                 );
               },
             ),
-          ],
+         */ ],
         ),
       ),
       body: FutureBuilder(
@@ -219,6 +227,117 @@ class _HigieneState extends State<Higiene> {
           }
         },
       ),
+    );
+  }
+  void _showAddProductDialog(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    final nombreController = TextEditingController();
+    final prioridadController = TextEditingController();
+    final notaController = TextEditingController();
+    final precioController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Agregar Producto'),
+          content: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    controller: nombreController,
+                    decoration: InputDecoration(labelText: 'Nombre'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingrese el nombre';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: prioridadController,
+                    decoration: InputDecoration(labelText: 'Prioridad'),
+                  ),
+                  TextFormField(
+                    controller: notaController,
+                    decoration: InputDecoration(labelText: 'Nota'),
+                  ),
+                  TextFormField(
+                    controller: precioController,
+                    decoration: InputDecoration(labelText: 'Precio'),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor ingrese el precio';
+                      }
+                      if (double.tryParse(value) == null) {
+                        return 'Por favor ingrese un número válido';
+                      }
+                      return null;
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: Text('Guardar'),
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  final producto = Producto(
+                    nombre: nombreController.text,
+                    prioridad: prioridadController.text,
+                    nota: notaController.text,
+                    idCategoria: 4,
+                    adquirido: "false",
+                    precio: double.parse(precioController.text),
+                  );
+                  final prefs = PrefernciaUsuario();
+                  final token = prefs.token;
+
+                  try {
+                    await Provider.of<ProductosProvider>(context, listen: false)
+                        .saveProducto(producto, token);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Higiene(),
+                      ),
+                    );
+                  } catch (e) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Error'),
+                          content: Text('Error al guardar producto: $e'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text('Cerrar'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                }
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

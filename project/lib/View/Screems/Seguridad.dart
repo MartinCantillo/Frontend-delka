@@ -4,7 +4,6 @@ import 'package:project/Models/Producto.dart';
 import 'package:project/Provider/ProductosProvider.dart';
 import 'package:project/View/Screems/Alimentacion.dart';
 import 'package:project/View/Screems/Higiene.dart';
-import 'package:project/View/Screems/MyHomePage.dart';
 import 'package:project/View/Screems/Panales.dart';
 import 'package:project/View/Screems/Ropa.dart';
 import 'package:provider/provider.dart';
@@ -136,7 +135,7 @@ class _SeguridadState extends State<Seguridad> {
                 );
               },
             ),
-            ListTile(
+            /*     ListTile(
               title: const Text('Personalizar'),
               onTap: () {
                 Navigator.push(
@@ -147,6 +146,7 @@ class _SeguridadState extends State<Seguridad> {
                 );
               },
             ),
+         */
           ],
         ),
       ),
@@ -314,7 +314,7 @@ class _SeguridadState extends State<Seguridad> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const MyHomePage(),
+                        builder: (context) => const Seguridad(),
                       ),
                     );
                   } catch (e) {

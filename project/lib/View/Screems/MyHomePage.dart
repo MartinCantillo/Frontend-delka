@@ -142,19 +142,18 @@ class _MyHomePageState extends State<MyHomePage> {
                  
                 },
               ),
-              ListTile(
-                title: const Text('Personalizar'),
-                onTap: () {
-                    
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Alimentacion(),
-                    ),
-                  );
-                
-                },
-              ),
+               /*     ListTile(
+              title: const Text('Personalizar'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Alimentacion(),
+                  ),
+                );
+              },
+            ),
+         */
             ],
           ),
         ),
