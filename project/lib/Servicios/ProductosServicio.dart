@@ -34,8 +34,8 @@ class ProductosService {
   Future<String> saveProducto(Producto p, String token) async {
     try {
       final url = "$endpoint/addProducto";
-print("objeto${p.toJson()}");
-      print("Token de autenticación: $token");
+
+    
 
       final response = await http.post(
         Uri.parse(url),
@@ -45,7 +45,7 @@ print("objeto${p.toJson()}");
           'Authorization': 'Bearer $token',
         },
       );
-   //  print("Código de estado de la respuesta: ${response.statusCode}");
+  
       if (response.statusCode == 200) {
         return "Producto Guardado";
       } else {

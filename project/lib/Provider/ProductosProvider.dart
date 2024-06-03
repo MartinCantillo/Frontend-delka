@@ -29,7 +29,6 @@ class ProductosProvider extends ChangeNotifier {
       notifyListeners();
       return _productos;
     } catch (e) {
-      // print("Error al obtener productos: $e");
       throw e;
     }
   }
@@ -41,7 +40,6 @@ class ProductosProvider extends ChangeNotifier {
       notifyListeners();
       return response;
     } catch (e) {
-      //print("Error al guardar producto: $e");
       throw e;
     }
   }

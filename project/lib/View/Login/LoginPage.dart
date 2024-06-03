@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:project/LocalStore/sharepreference.dart';
 import 'package:project/Provider/UsuarioProvider.dart';
+import 'package:project/View/Screems/LoginForm.dart';
 import 'package:project/View/Screems/MyHomePage.dart';
 import 'package:project/View/components/MyButton.dart';
 import 'package:project/View/components/MyTextField.dart';
-import 'package:project/View/components/SquareTile.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   static const String nombre = 'login';
-   final prefs = PrefernciaUsuario();
+  final prefs = PrefernciaUsuario();
 
   // text editing controllers
   final usernameController = TextEditingController();
@@ -23,7 +23,7 @@ class LoginPage extends StatelessWidget {
     try {
       await usuarioProvider.login(
           usernameController.text, passwordController.text);
-          prefs.usuario=usernameController.text;
+      prefs.usuario = usernameController.text;
       Navigator.of(context).pushNamed(MyHomePage.nombre);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -34,9 +34,12 @@ class LoginPage extends StatelessWidget {
     }
   }
 
+  void navigateToRegisterPage(BuildContext context) {
+    Navigator.of(context).pushNamed(LoginForm.nombre);
+  }
+
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -89,21 +92,14 @@ class LoginPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
-                  ],
                 ),
               ),
 
               const SizedBox(height: 15),
 
-              // sign in button
               MyButton(
                 onTap: () {
-                  signUserIn(context); // Pasa el contexto
+                  signUserIn(context);
                 },
               ),
 
@@ -122,10 +118,6 @@ class LoginPage extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text(
-                        'Or continue with',
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
                     ),
                     Expanded(
                       child: Divider(
@@ -139,39 +131,27 @@ class LoginPage extends StatelessWidget {
 
               const SizedBox(height: 20),
 
-              // google + apple sign in buttons
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // google button
-                  SquareTile(imagePath: 'assets/images/google.png'),
-
-                  SizedBox(width: 25),
-
-                  // apple button
-                  SquareTile(imagePath: 'assets/images/apple.png')
-                ],
-              ),
-
-              const SizedBox(height: 20),
-
-              // not a member? register now
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Not a member?',
-                    style: TextStyle(color: Colors.grey[700]),
-                  ),
-                  const SizedBox(width: 4),
-                  const Text(
-                    'Register now',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
+              InkWell(
+                onTap: () {
+                  navigateToRegisterPage(context);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Not a member?',
+                      style: TextStyle(color: Colors.grey[700]),
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 4),
+                    Text(
+                      'Register now',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               )
             ],
           ),

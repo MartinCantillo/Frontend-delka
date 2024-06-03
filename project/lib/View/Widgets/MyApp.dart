@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:project/View/Screems/Alimentacion.dart';
+import 'package:project/View/Screems/LoginForm.dart';
 import 'package:project/View/Screems/MyHomePage.dart';
 import 'package:project/View/Login/LoginPage.dart';
 import 'package:project/View/Screems/Panales.dart';
 import 'package:project/View/Screems/Ropa.dart';
 import 'package:project/View/Screems/Seguridad.dart';
 import 'package:project/View/Screems/Higiene.dart';
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key});
@@ -31,6 +30,7 @@ class MyApp extends StatelessWidget {
         Alimentacion.nombre: (context) => Alimentacion(),
         Higiene.nombre: (context) => Higiene(),
         Seguridad.nombre: (context) => Seguridad(),
+        LoginForm.nombre: (context) => LoginForm(),
       },
     );
   }

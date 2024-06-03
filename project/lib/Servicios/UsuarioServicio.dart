@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:project/LocalStore/sharepreference.dart';
 import 'package:project/Models/Usuario.dart';
 
@@ -20,7 +19,7 @@ class UsuarioServicio {
           },
           body: user.toJson());
 
-      //print(response.body);
+     
       if (response.statusCode == 200) {
         final decodeData = jsonDecode(response.body);
 
@@ -40,6 +39,28 @@ class UsuarioServicio {
       }
     } catch (e) {
       throw Exception("Error ${e}");
+    }
+  }
+
+  Future<String> saveUsuario(Usuario u) async {
+    try {
+      final url = "$endpoint/saveUser";
+
+      final response = await http.post(
+        Uri.parse(url),
+        body: u.toJson(),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+    
+      if (response.statusCode == 200) {
+        return "Producto Guardado";
+      } else {
+        throw Exception("Error ${response.statusCode}: ${response.body}");
+      }
+    } catch (e) {
+      throw Exception("Error $e");
     }
   }
 }

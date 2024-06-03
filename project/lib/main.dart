@@ -18,6 +18,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => UsuarioProvider()),
         ChangeNotifierProvider(create: (_) => ProductosProvider()),
+        
       ],
       child: const MyApp(),
     ),
