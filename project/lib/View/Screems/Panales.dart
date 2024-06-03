@@ -4,6 +4,7 @@ import 'package:project/Models/Producto.dart';
 import 'package:project/Provider/ProductosProvider.dart';
 import 'package:project/View/Screems/Alimentacion.dart';
 import 'package:project/View/Screems/Higiene.dart';
+import 'package:project/View/Screems/MyHomePage.dart';
 import 'package:project/View/Screems/Ropa.dart';
 import 'package:project/View/Screems/Seguridad.dart';
 
@@ -19,12 +20,11 @@ class Panales extends StatefulWidget {
 
 class _PanalesState extends State<Panales> {
   late Future<List<Producto>> ProductoLis;
-
+  final prefs = PrefernciaUsuario();
   @override
   void initState() {
     super.initState();
 
-    final prefs = PrefernciaUsuario();
     final token = prefs.token;
 
     final productosProvider =
@@ -46,7 +46,7 @@ class _PanalesState extends State<Panales> {
         ),
         centerTitle: true,
         backgroundColor: Colors.blue,
-          actions: [
+        actions: [
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () {
@@ -59,30 +59,33 @@ class _PanalesState extends State<Panales> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+            UserAccountsDrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.account_circle_sharp,
-                    size: 100.5,
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    'Categorias',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+              accountName: Text(
+                'Hola,',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              accountEmail: Text(prefs.usuario),
+              currentAccountPicture: CircleAvatar(
+                child: Icon(Icons.person, size: 50),
               ),
             ),
             ListTile(
+              leading: Icon(Icons.home),
+              title: const Text('Home'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MyHomePage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.child_friendly),
               title: const Text('Ropa'),
               onTap: () {
                 Navigator.push(
@@ -94,6 +97,7 @@ class _PanalesState extends State<Panales> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.baby_changing_station),
               title: const Text('Pañales'),
               onTap: () {
                 Navigator.push(
@@ -105,6 +109,7 @@ class _PanalesState extends State<Panales> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.fastfood),
               title: const Text('Alimentación'),
               onTap: () {
                 Navigator.push(
@@ -116,6 +121,7 @@ class _PanalesState extends State<Panales> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.cleaning_services),
               title: const Text('Higiene'),
               onTap: () {
                 Navigator.push(
@@ -127,6 +133,7 @@ class _PanalesState extends State<Panales> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.security),
               title: const Text('Seguridad'),
               onTap: () {
                 Navigator.push(
@@ -137,18 +144,6 @@ class _PanalesState extends State<Panales> {
                 );
               },
             ),
-             /*     ListTile(
-              title: const Text('Personalizar'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Alimentacion(),
-                  ),
-                );
-              },
-            ),
-         */
           ],
         ),
       ),
@@ -182,7 +177,7 @@ class _PanalesState extends State<Panales> {
                       borderRadius: BorderRadius.circular(70),
                       boxShadow: [
                         BoxShadow(
-                         color: Colors.blue.withOpacity(0.70), // S
+                          color: Colors.blue.withOpacity(0.70), // S
                           spreadRadius: 2,
                           blurRadius: 3,
                           offset: Offset(0, 20),
@@ -217,7 +212,10 @@ class _PanalesState extends State<Panales> {
                               fontSize: 14,
                             ),
                           ),
-                           subtitle: Text("Prioridad: ${producto.prioridad ?? 'Sin prioridad'}", style: TextStyle(color: Colors.blue),),
+                          subtitle: Text(
+                            "Prioridad: ${producto.prioridad ?? 'Sin prioridad'}",
+                            style: TextStyle(color: Colors.blue),
+                          ),
                           leading: Icon(Icons.child_care, color: Colors.blue),
                         ),
                       ],
@@ -231,6 +229,7 @@ class _PanalesState extends State<Panales> {
       ),
     );
   }
+
   void _showAddProductDialog(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     final nombreController = TextEditingController();

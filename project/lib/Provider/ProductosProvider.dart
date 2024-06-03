@@ -16,7 +16,20 @@ class ProductosProvider extends ChangeNotifier {
       notifyListeners();
       return _productos;
     } catch (e) {
-     // print("Error al obtener productos: $e");
+      // print("Error al obtener productos: $e");
+      throw e;
+    }
+  }
+
+  Future<List<Producto>> getProductos(String token) async {
+    try {
+      final List<Producto>? productos =
+          await _productosService.getProductos(token);
+      _productos = productos!;
+      notifyListeners();
+      return _productos;
+    } catch (e) {
+      // print("Error al obtener productos: $e");
       throw e;
     }
   }

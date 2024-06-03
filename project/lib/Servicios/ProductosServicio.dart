@@ -45,7 +45,7 @@ print("objeto${p.toJson()}");
           'Authorization': 'Bearer $token',
         },
       );
-     print("Código de estado de la respuesta: ${response.statusCode}");
+   //  print("Código de estado de la respuesta: ${response.statusCode}");
       if (response.statusCode == 200) {
         return "Producto Guardado";
       } else {
@@ -53,6 +53,31 @@ print("objeto${p.toJson()}");
       }
     } catch (e) {
       throw Exception("Error $e");
+    }
+  }
+
+  Future<List<Producto>>? getProductos(String token) async {
+    try {
+      final url = "$endpoint/getProductos";
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      
+      );
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonData = jsonDecode(response.body);
+
+        final List<Producto> productos =
+            jsonData.map((data) => Producto.fromMap(data)).toList();
+        return productos;
+      } else {
+        throw Exception("Error al obtener productos: ${response.statusCode}");
+      }
+    } catch (e) {
+      throw Exception("Error al obtener productos: $e");
     }
   }
 }
