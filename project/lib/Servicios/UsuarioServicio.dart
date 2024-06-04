@@ -19,7 +19,7 @@ class UsuarioServicio {
           },
           body: user.toJson());
 
-      print(response.body);
+      //print(response.body);
       if (response.statusCode == 200) {
         final decodeData = jsonDecode(response.body);
 
