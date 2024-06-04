@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/LocalStore/sharepreference.dart';
 import 'package:project/Models/Producto.dart';
 import 'package:project/Provider/ProductosProvider.dart';
+import 'package:project/View/Login/LoginPage.dart';
 import 'package:project/View/Screems/Alimentacion.dart';
 import 'package:project/View/Screems/Higiene.dart';
 import 'package:project/View/Screems/MyHomePage.dart';
@@ -138,6 +139,18 @@ class _SeguridadState extends State<Seguridad> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => Seguridad(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.logout_rounded),
+              title: const Text('Cerrar Sesion'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
                   ),
                 );
               },

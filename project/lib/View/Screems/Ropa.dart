@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/LocalStore/sharepreference.dart';
 import 'package:project/Models/Producto.dart';
 import 'package:project/Provider/ProductosProvider.dart';
+import 'package:project/View/Login/LoginPage.dart';
 import 'package:project/View/Screems/Alimentacion.dart';
 import 'package:project/View/Screems/Higiene.dart';
 import 'package:project/View/Screems/MyHomePage.dart';
@@ -18,12 +19,11 @@ class Ropa extends StatefulWidget {
 
 class _RopaState extends State<Ropa> {
   late Future<List<Producto>> ProductoLis;
-final prefs = PrefernciaUsuario();
+  final prefs = PrefernciaUsuario();
   @override
   void initState() {
     super.initState();
 
-    
     final token = prefs.token;
 
     final productosProvider =
@@ -139,6 +139,18 @@ final prefs = PrefernciaUsuario();
                   context,
                   MaterialPageRoute(
                     builder: (context) => Seguridad(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.logout_rounded),
+              title: const Text('Cerrar Sesion'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
                   ),
                 );
               },
