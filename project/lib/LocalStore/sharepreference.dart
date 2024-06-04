@@ -14,13 +14,21 @@ class PrefernciaUsuario {
   initPrefs() async {
     _prefs = await SharedPreferences.getInstance();
   }
-  
+
   String get token {
     return _prefs.getString('auth_token') ?? "";
   }
 
   set token(String value) {
     _prefs.setString('auth_token', value);
+  }
+
+  int get id {
+    return _prefs.getInt('id') ?? 0;
+  }
+
+  set id(int value) {
+    _prefs.setInt('id', value);
   }
 
   String get usuario {

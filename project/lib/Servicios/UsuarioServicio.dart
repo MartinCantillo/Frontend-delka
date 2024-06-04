@@ -19,16 +19,18 @@ class UsuarioServicio {
           },
           body: user.toJson());
 
-     
+      print(response.body);
       if (response.statusCode == 200) {
         final decodeData = jsonDecode(response.body);
 
         final token = decodeData['token'];
         final id = decodeData['user_id'] as int?;
+      
         final usuario =
             Usuario(id: id, username: user.username, password: user.password);
 
         prefs.token = token;
+        prefs.id = id! ;
         return usuario;
       } else {
         if (response.statusCode == 401) {
@@ -53,7 +55,7 @@ class UsuarioServicio {
           'Content-Type': 'application/json',
         },
       );
-    
+
       if (response.statusCode == 200) {
         return "Producto Guardado";
       } else {

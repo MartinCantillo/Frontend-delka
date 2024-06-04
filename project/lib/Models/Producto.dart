@@ -8,6 +8,7 @@ class Producto {
   double? precio;
   String? adquirido;
   int? idCategoria;
+  int? idUsuario;
   Producto({
     this.id,
     this.nombre,
@@ -16,6 +17,7 @@ class Producto {
     this.precio,
     this.adquirido,
     this.idCategoria,
+    this.idUsuario,
   });
 
   Map<String, dynamic> toMap() {
@@ -27,6 +29,7 @@ class Producto {
       'precio': precio,
       'adquirido': adquirido,
       'idCategoria': idCategoria,
+      'idUsuario': idUsuario
     };
   }
 
@@ -37,8 +40,9 @@ class Producto {
       prioridad: map['prioridad'],
       nota: map['nota'],
       precio: map['precio']?.toDouble(),
-      adquirido: map['adquirido']??"",
+      adquirido: map['adquirido'] ?? "",
       idCategoria: map['idCategoria']?.toInt(),
+      idUsuario: map['idUsuario'],
     );
   }
 
@@ -49,6 +53,6 @@ class Producto {
 
   @override
   String toString() {
-    return 'Producto(id: $id, nombre: $nombre, prioridad: $prioridad, nota: $nota, precio: $precio, adquirido: $adquirido, idCategoria: $idCategoria)';
+    return 'Producto(id: $id, nombre: $nombre, prioridad: $prioridad, nota: $nota, precio: $precio, adquirido: $adquirido, idCategoria: $idCategoria, idUsuario: $idUsuario)';
   }
 }

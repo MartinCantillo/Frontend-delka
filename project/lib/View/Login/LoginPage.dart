@@ -26,6 +26,7 @@ class LoginPage extends StatelessWidget {
       prefs.usuario = usernameController.text;
       Navigator.of(context).pushNamed(MyHomePage.nombre);
     } catch (e) {
+      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Usuario o contraseña incorrecto'),
