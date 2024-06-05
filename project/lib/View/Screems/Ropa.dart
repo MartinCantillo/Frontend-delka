@@ -203,14 +203,14 @@ class _RopaState extends State<Ropa> {
                             producto.nombre ?? "",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: 14,
                             ),
                           ),
                           subtitle: Text(
                             '\$${producto.precio}',
                             style: TextStyle(
                               color: Colors.blue,
-                              fontSize: 14,
+                              fontSize: 12,
                             ),
                           ),
                           leading:
@@ -220,12 +220,12 @@ class _RopaState extends State<Ropa> {
                           title: Text(
                             producto.nota ?? "",
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 12,
                             ),
                           ),
                           subtitle: Text(
                             "Prioridad: ${producto.prioridad ?? 'Sin prioridad'}",
-                            style: TextStyle(color: Colors.blue),
+                            style: TextStyle(color: Colors.blue, fontSize: 10),
                           ),
                           leading: Icon(Icons.child_care, color: Colors.blue),
                         ),
