@@ -12,7 +12,7 @@ class UsuarioServicio {
     final prefs = PrefernciaUsuario();
     try {
       final url = "$endpoint/login";
-      print(user.toJson());
+      // print(user.toJson());
       final response = await http.post(Uri.parse(url),
           headers: {
             'Content-Type': 'application/json',
@@ -25,12 +25,12 @@ class UsuarioServicio {
 
         final token = decodeData['token'];
         final id = decodeData['user_id'] as int?;
-      
+
         final usuario =
             Usuario(id: id, username: user.username, password: user.password);
 
         prefs.token = token;
-        prefs.id = id! ;
+        prefs.id = id!;
         return usuario;
       } else {
         if (response.statusCode == 401) {

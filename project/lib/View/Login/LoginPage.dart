@@ -8,7 +8,7 @@ import 'package:project/View/components/MyTextField.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+   LoginPage({super.key});
   static const String nombre = 'login';
   final prefs = PrefernciaUsuario();
 
@@ -24,9 +24,9 @@ class LoginPage extends StatelessWidget {
       await usuarioProvider.login(
           usernameController.text, passwordController.text);
       prefs.usuario = usernameController.text;
-      Navigator.of(context).pushNamed(MyHomePage.nombre);
+      // Llevar a la otra pestaña después de que se ejecute el provider correctamente
+      Navigator.of(context).pushReplacementNamed(MyHomePage.nombre);
     } catch (e) {
-      print(e);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Usuario o contraseña incorrecto'),
