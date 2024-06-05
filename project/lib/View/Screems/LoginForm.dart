@@ -105,42 +105,46 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  void _saveUsuario(BuildContext context) {
-    final String username = _usernameController.text;
-    final String password = _passwordController.text;
-    final UsuarioProvider usuarioProvider =
-        Provider.of<UsuarioProvider>(context, listen: false);
-    usuarioProvider
-        .saveUsuario(Usuario(
+ void _saveUsuario(BuildContext context) async {
+  final String username = _usernameController.text;
+  final String password = _passwordController.text;
+  final UsuarioProvider usuarioProvider =
+      Provider.of<UsuarioProvider>(context, listen: false);
+  
+  try {
+    await usuarioProvider.saveUsuario(Usuario(
       username: username,
       password: password,
-    ))
-        .then((response) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text("Registro Exitoso"),
-            content: Text("¡Bienvenido, $username!"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginPage(),
-                    ),
-                  );
-                },
-                child: Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
-    }).catchError((error) {});
+    ));
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Registro Exitoso"),
+          content: Text("¡Bienvenido, $username!"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
+                );
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  } catch (error) {
+    // Manejo del error si ocurre alguna excepción en el proceso de registro
   }
+}
+
 
   @override
   void dispose() {
